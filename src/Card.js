@@ -1,13 +1,14 @@
 import React from 'react';
 
-const Card = () => {
-  this.image = Math.floor(Math.random() * 10)
+const Card = (props) => {
+  // this.image = Math.floor(Math.random() * 10)
+  const { id, name, fact } = props;
   return (
-    <div>
-      <img src={"https://randomuser.me/api/portraits/men/" + this.image + ".jpg"} alt ='robot'/>
+    <div className ="bg-white dib br3 pa3 ma2 grow bw2 shadow-5">
+      <img className = "br3" src={"https://randomuser.me/api/portraits/men/" + id + ".jpg"} alt ='robot'/>
       <div>
-        <h2>Hello from h2</h2>
-        <p>Hello from p tag</p>
+        <h2>{name}</h2>
+        <p>{fact}</p>
       </div>
     </div>
   );
