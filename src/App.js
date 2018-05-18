@@ -15,18 +15,18 @@ class App extends Component {
 
    onSearchChange = (event) => {
      this.setState({ searchValue: event.target.value })
-    const filteredUsers = this.state.users.filter(user => {
-      return user.name.toLowerCase().includes(this.state.searchValue.toLowerCase());
-    })
-    console.log(filteredUsers);
   };
 
   render() {
+    const filteredUsers = this.state.users.filter(user => {
+      return user.name.toLowerCase().includes(this.state.searchValue.toLowerCase());
+    })
+
     return (
       <div className="tc">
         <h1>Social List</h1>
         <SearchBox searchChange={this.onSearchChange}/>
-        <CardList users={users}/>
+        <CardList users={filteredUsers}/>
       </div>
     )
   }
