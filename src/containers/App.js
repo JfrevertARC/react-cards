@@ -3,7 +3,6 @@ import CardList from '../components/CardList';
 import Scroll from '../components/Scroll';
 import SearchBox from '../components/SearchBox';
 
-
 class App extends Component {
   constructor () {
     super()
