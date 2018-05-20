@@ -1,20 +1,34 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import CardList from '../components/CardList';
 import Scroll from '../components/Scroll';
 import SearchBox from '../components/SearchBox';
+import { setSearchField } from '../actions'
+
+const mapStateToProps = (state) => {
+  return {
+    searchValue: state.searchValue
+    // instructor used: searchValue: state.searchUsers.searchValue
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSearchChange: (event) => dispatch(setSearchField(event.target.value))
+  }
+}
 
 class App extends Component {
   constructor () {
     super()
     this.state = {
       users: [],
-      searchValue: ''
+      // searchValue: ''
     }
   }
 
   componentDidMount(){
-    let randUsers = []
-      randUsers.push(fetch('https://jsonplaceholder.typicode.com/users/')
+      fetch('https://jsonplaceholder.typicode.com/users/')
               .then(response => {
                 return response.json()
               })
@@ -23,15 +37,16 @@ class App extends Component {
               })
               .catch(err => {
                 console.log(err);
-              }))
+              })
   }
 
-  onSearchChange = (event) => {
-     this.setState({ searchValue: event.target.value })
-  };
+  // onSearchChange = (event) => {
+  //    this.setState({ searchValue: event.target.value })
+  // };
 
   render() {
-    const { users, searchValue } = this.state;
+    const { users, /*searchValue*/ } = this.state;
+    const { searchValue, onSearchChange } =this.props;
     const filteredUsers = users.filter(user => {
       return user.name.toLowerCase().includes(searchValue.toLowerCase());
     })
@@ -41,7 +56,7 @@ class App extends Component {
        (
         <div className="tc">
           <h1>Social List</h1>
-          <SearchBox searchChange={this.onSearchChange}/>
+          <SearchBox searchChange={onSearchChange}/>
           <Scroll>
             <CardList users={filteredUsers}/>
           </Scroll>
@@ -50,4 +65,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
